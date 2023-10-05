@@ -1,7 +1,8 @@
 import "./Body.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Body() {
+  const nameRef = useRef();
   const [state, setState] = useState({
     name: "",
     gender: "",
@@ -16,10 +17,17 @@ export default function Body() {
     });
   };
 
+  const onSubmit = () => {
+    if (state.name === "") {
+      nameRef.current.focus();
+    }
+  };
+
   return (
     <div className="body">
       <div>
         <input
+          ref={nameRef}
           name="name"
           placeholder="이름"
           value={state.name}
@@ -35,6 +43,9 @@ export default function Body() {
       </div>
       <div>
         <textarea name="bio" value={state.bio} onChange={onChange} />
+      </div>
+      <div>
+        <button onClick={onSubmit}>회원가입</button>
       </div>
     </div>
   );
