@@ -1,7 +1,9 @@
-export default function Footer() {
+const Header = () => {
   return (
-    <footer>
+    <header>
       <h1>FOOTER</h1>
-    </footer>
+    </header>
   );
-}
+};
+
+export default Header;
