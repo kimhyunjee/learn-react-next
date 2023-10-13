@@ -1,9 +1,15 @@
 import "./App.css";
+import Header from "./components/Header";
+import TodoEditor from "./components/TodoEditor";
 
 function App() {
   return (
     <>
-      <h2>안녕 투두리스트</h2>
+      <div className="App">
+        <Header />
+        <TodoEditor />
+        <div>Todo List</div>
+      </div>
     </>
   );
 }
