@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import TodoEditor from "./components/TodoEditor";
@@ -27,12 +27,23 @@ const mockData = [
 
 function App() {
   const [todos, setTodos] = useState(mockData);
+  const idRef = useRef(3);
+
+  const onCreate = (content) => {
+    const newTodo = {
+      id: idRef.current++,
+      isDone: false,
+      content,
+      createdDate: new Date().getTime(),
+    };
+    setTodos([newTodo, ...todos]);
+  };
 
   return (
     <>
       <div className="App">
         <Header />
-        <TodoEditor />
+        <TodoEditor onCreate={onCreate} />
         <TodoList />
       </div>
     </>
