@@ -1,13 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
 import "./TodoEditor.css";
 
 export default function TodoEditor({ onCreate }) {
-  const [content, setContent] = useState("");
   const inputRef = useRef();
+  const [content, setContent] = useState("");
 
   const onChangeContent = (e) => {
-    console.log(e.target.value);
     setContent(e.target.value);
   };
 
@@ -20,9 +19,9 @@ export default function TodoEditor({ onCreate }) {
     setContent("");
   };
 
-  const onKeyDown = (e) => {
+  const onKeydown = (e) => {
     if (e.keyCode === 13) {
-      onclick();
+      onClick();
     }
   };
 
@@ -32,7 +31,7 @@ export default function TodoEditor({ onCreate }) {
         ref={inputRef}
         value={content}
         onChange={onChangeContent}
-        onKeyDown={onKeyDown}
+        onKeyDown={onKeydown}
         placeholder="새로운 Todo ..."
       />
       <button onClick={onClick}>추가</button>
