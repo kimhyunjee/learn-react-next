@@ -40,18 +40,6 @@ function App() {
   };
 
   const onUpdate = (targetId) => {
-    // setTodos(
-    //   todos.map((todo) => {
-    //     if (todo.id === targetId) {
-    //       return {
-    //         ...todo,
-    //         isDon: !todo.isDone,
-    //       };
-    //     } else {
-    //       return todo;
-    //     }
-    //   })
-    // );
     setTodos(
       todos.map((todo) =>
         todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo
@@ -59,12 +47,16 @@ function App() {
     );
   };
 
+  const onDelete = (targetId) => {
+    setTodos(todos.filter((todo) => todo.id !== targetId));
+  };
+
   return (
     <>
       <div className="App">
         <Header />
         <TodoEditor onCreate={onCreate} />
-        <TodoList todos={todos} onUpdate={onUpdate} />
+        <TodoList todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
       </div>
     </>
   );
