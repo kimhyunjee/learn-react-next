@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 import TodoItem from "./TodoItem";
 import "./TodoList.css";
 
@@ -13,25 +13,13 @@ export default function TodoList({ todos, onUpdate, onDelete }) {
     if (search === "") {
       return todos;
     }
+
     return todos.filter((todo) =>
       todo.content.toLowerCase().includes(search.toLowerCase())
     );
   };
 
-  const getAnalyzedTodoData = () => {
-    console.log("todo 분석 함수 호출");
-    const totalCount = todos.length;
-    const doneCount = todos.filter((todo) => todo.isDone).length;
-    const notDoneCount = totalCount - doneCount;
-    return {
-      totalCount,
-      doneCount,
-      notDoneCount,
-    };
-  };
-
   const { totalCount, doneCount, notDoneCount } = useMemo(() => {
-    console.log("todo 분석 함수 호출");
     const totalCount = todos.length;
     const doneCount = todos.filter((todo) => todo.isDone).length;
     const notDoneCount = totalCount - doneCount;
