@@ -1,9 +1,12 @@
-import { useReducer, useRef, useState, useCallback } from "react";
+import { useReducer, useRef, useState, useCallback, useMemo } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import TodoEditor from "./components/TodoEditor";
 import TodoList from "./components/TodoList";
-import { TodoContext } from "./components/TodoContext";
+import {
+  TodoStateContext,
+  TodoDispatchContext,
+} from "./components/TodoContext";
 
 const mockData = [
   {
@@ -66,14 +69,20 @@ function App() {
     dispatch({ type: "DELETE", data: targetId });
   }, []);
 
+  const memoizedDispatch = useMemo(() => {
+    return { onCreate, onUpdate, onDelete };
+  }, []);
+
   return (
     <>
       <div className="App">
         <Header />
-        <TodoContext.Provider value={{ todos, onCreate, onUpdate, onDelete }}>
-          <TodoEditor onCreate={onCreate} />
-          <TodoList />
-        </TodoContext.Provider>
+        <TodoStateContext.Provider value={{ todos }}>
+          <TodoDispatchContext value={memoizedDispatch}>
+            <TodoEditor />
+            <TodoList />
+          </TodoDispatchContext>
+        </TodoStateContext.Provider>
       </div>
     </>
   );

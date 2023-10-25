@@ -1,8 +1,11 @@
 /* eslint-disable react/prop-types */
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import "./TodoEditor.css";
+import { TodoDispatchContext } from "./TodoContext";
 
-export default function TodoEditor({ onCreate }) {
+export default function TodoEditor() {
+  const { onCreate } = useContext(TodoDispatchContext);
+
   const inputRef = useRef();
   const [content, setContent] = useState("");
 
