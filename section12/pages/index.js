@@ -1,14 +1,14 @@
+import { fetchCountries } from "@/api";
 import { useEffect } from "react";
 
-export default function Home({ name }) {
-  console.log("HOME");
-
-  // 브라우저에만 콘솔 찍고 싶을 때  useEffect 사용 !
-  useEffect(() => {
-    console.log("HOME MOUNT");
-  }, []);
-
-  return <div>{name}</div>;
+export default function Home({ countries }) {
+  return (
+    <div>
+      {countries.map((country) => (
+        <div key={country.code}>{country.commonName}</div>
+      ))}
+    </div>
+  );
 }
 
 export const getServerSideProps = async () => {
@@ -17,9 +17,11 @@ export const getServerSideProps = async () => {
   이 컴포넌트는 반드시 객체를 반환해야 하며 안에 props라는 프로퍼티를 가지고 있어야 한다
   */
 
+  const countries = await fetchCountries();
+
   return {
     props: {
-      name: "KOREA",
+      countries,
     },
   };
 };
