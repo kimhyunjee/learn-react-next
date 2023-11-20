@@ -19,7 +19,14 @@ export default function Country(country) {
 
 Country.Layout = SubLayout;
 
-const getServerSideProps = async () => {
+export const getStaticPaths = async () => {
+  return {
+    paths: [{ params: { code: "ABW" } }, { params: { code: "KOR" } }],
+    fallback: false, //404로 반환
+  };
+};
+
+const getStaticProps = async () => {
   const { code } = context.params;
 
   let country = null;
