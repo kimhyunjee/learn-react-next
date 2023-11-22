@@ -9,6 +9,14 @@ export default function Country(country) {
   const router = useRouter();
   const { code } = router.query;
 
+  if (router.isFallback) {
+    return <div> Loading ...</div>;
+  }
+
+  if (!country) {
+    return <div>존재하지 않는 국가입니다</div>;
+  }
+
   return (
     <div>
       {country.commonName}
@@ -22,7 +30,7 @@ Country.Layout = SubLayout;
 export const getStaticPaths = async () => {
   return {
     paths: [{ params: { code: "ABW" } }, { params: { code: "KOR" } }],
-    fallback: false, //404로 반환
+    fallback: "blocking",
   };
 };
 
