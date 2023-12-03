@@ -1,4 +1,5 @@
 import { fetchSearchResults } from "@/api";
+import Searchbar from "@/components/Searchbar";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -21,9 +22,7 @@ export default function Search() {
 
   return (
     <div>
-      {countries.map((country) => (
-        <div key={countries.code}>{countries.commonName}</div>
-      ))}
+      <Searchbar />
     </div>
   );
 }
