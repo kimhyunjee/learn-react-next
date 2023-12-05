@@ -1,16 +1,15 @@
-/*
-파일명[...code]는 브라우저 주소창에 country/KOR/219328139273 등 코드번호 뒤 어떤 내용이 들어와도 이 파일이 대응할 수 있게 하는 것
-[[...code]] 대괄호를 두 번 감싸주게 되면 옵셔널하게되어  /country 만 해도 이 파일이 대응하게 됨
-*/
-
+import { fetchCountry } from "@/api";
+import SubLayout from "@/components/SubLayout";
 import { useRouter } from "next/router";
+import style from "./[code].module.css";
+import Image from "next/image";
 
-export default function Country(country) {
+export default function Country({ country }) {
   const router = useRouter();
   const { code } = router.query;
 
   if (router.isFallback) {
-    return <div> Loading ...</div>;
+    return <div>Loading ...</div>;
   }
 
   if (!country) {
@@ -18,9 +17,35 @@ export default function Country(country) {
   }
 
   return (
-    <div>
-      {country.commonName}
-      {country.officialName}
+    <div className={style.container}>
+      <div className={style.header}>
+        <div className={style.commonName}>
+          {country.flagEmoji}&nbsp;{country.commonName}
+        </div>
+        <div className={style.officialName}>{country.officialName}</div>
+      </div>
+
+      <div className={style.flag_img}>
+        <Image src={country.flagImg} fill />
+      </div>
+
+      <div className={style.body}>
+        <div>
+          <b>코드 :</b>&nbsp;{country.code}
+        </div>
+        <div>
+          <b>수도 :</b>&nbsp;{country.capital.join(", ")}
+        </div>
+        <div>
+          <b>지역 :</b>&nbsp;{country.region}
+        </div>
+        <div>
+          <b>지도 :</b>&nbsp;
+          <a target="_blank" href={country.googleMapURL}>
+            {country.googleMapURL}
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
@@ -30,13 +55,13 @@ Country.Layout = SubLayout;
 export const getStaticPaths = async () => {
   return {
     paths: [{ params: { code: "ABW" } }, { params: { code: "KOR" } }],
-    fallback: "blocking",
+    fallback: true,
   };
 };
 
-const getStaticProps = async () => {
+export const getStaticProps = async (context) => {
   const { code } = context.params;
-  console.log(`${code} 페이지 생성 ! `);
+  console.log(`${code} 페이지 생성!`);
 
   let country = null;
   if (code) {
