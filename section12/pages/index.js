@@ -1,7 +1,6 @@
 import { fetchCountries } from "@/api";
 import CountryList from "@/components/CountryList";
 import Searchbar from "@/components/Searchbar";
-import { useEffect } from "react";
 import Head from "next/head";
 
 export default function Home({ countries }) {
@@ -23,8 +22,6 @@ export default function Home({ countries }) {
 }
 
 export const getStaticProps = async () => {
-  // API 호출 코드가 필요함
-
   const countries = await fetchCountries();
   console.log("countries 데이터 불러옴");
 
